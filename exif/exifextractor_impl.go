@@ -105,10 +105,6 @@ func (e *ExifExtractorImpl) GetLatLong() (lat, long float64, err error) {
 	return e.exif.GPS.Latitude(), e.exif.GPS.Longitude(), nil
 }
 
-func (e *ExifExtractorImpl) GetTime() *time.Time {
-	if e.exif == nil {
-		return nil
-	}
-	t := e.exif.DateTimeOriginal()
-	return &t
+func (e *ExifExtractorImpl) GetTime() time.Time {
+	return e.exif.DateTimeOriginal()
 }

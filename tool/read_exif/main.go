@@ -32,8 +32,5 @@ func main() {
 	if err == nil {
 		logrus.Debugf("GPS: %f,%f", lat, long)
 	}
-	t := extractor.GetTime()
-	if t != nil {
-		logrus.Debugf("Time: %s", t.String())
-	}
+	logrus.Debugf("Time: %s", extractor.GetTime().String())
 }

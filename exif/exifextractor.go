@@ -1,14 +1,12 @@
 package exif
 
 import (
-	"fmt"
-	"github.com/Ruoyiran/exif-reader/utils/file"
 	"github.com/evanoberholster/imagemeta/meta"
 	"time"
 )
 
 const (
-	isDebug = true
+	isDebug = false
 )
 
 type ExifExtractor interface {
@@ -24,12 +22,9 @@ type ExifExtractor interface {
 
 	GetLatLong() (lat, long float64, err error)
 
-	GetTime() *time.Time
+	GetTime() time.Time
 }
 
 func GetExifExtractor(filePath string) (ExifExtractor, error) {
-	if !file.IsFileExist(filePath) {
-		return nil, fmt.Errorf("file %s not exist", filePath)
-	}
 	return &ExifExtractorImpl{filePath: filePath}, nil
 }
