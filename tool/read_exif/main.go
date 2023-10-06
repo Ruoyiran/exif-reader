@@ -19,15 +19,13 @@ func main() {
 		logrus.Fatalf("%s", err.Error())
 	}
 
-	logrus.Debugf("Make: %s", extractor.GetMake())
-	logrus.Debugf("Model: %s", extractor.GetModel())
-	logrus.Debugf("Software: %s", extractor.GetSoftware())
-	logrus.Debugf("Width: %d", extractor.GetImageWidth())
-	logrus.Debugf("Height: %d", extractor.GetImageHeight())
-	logrus.Debugf("Orientation: %s(%d)", extractor.GetOrientation().String(), extractor.GetOrientation())
-	lat, long, err := extractor.GetLatLong()
-	if err == nil {
-		logrus.Debugf("GPS: %f,%f", lat, long)
-	}
-	logrus.Debugf("Time: %s", extractor.GetTime().String())
+	info := extractor.GetExifInfo()
+	logrus.Debugf("Make: %s", info.Make)
+	logrus.Debugf("Model: %s", info.Model)
+	logrus.Debugf("Software: %s", info.Software)
+	logrus.Debugf("Width: %d", info.ImageWidth)
+	logrus.Debugf("Height: %d", info.ImageHeight)
+	logrus.Debugf("Orientation: %s(%d)", info.Orientation.String(), info.Orientation)
+	logrus.Debugf("GPS: %f,%f", info.GPSInfo.Latitude, info.GPSInfo.Longitude)
+	logrus.Debugf("Time: %s", info.Time.String())
 }

@@ -3,10 +3,8 @@ package exif
 import (
 	"github.com/evanoberholster/imagemeta"
 	"github.com/evanoberholster/imagemeta/exif2"
-	"github.com/evanoberholster/imagemeta/meta"
 	"github.com/sirupsen/logrus"
 	"os"
-	"time"
 )
 
 type ExifExtractorImpl struct {
@@ -56,55 +54,21 @@ func (e *ExifExtractorImpl) Decode() error {
 	return nil
 }
 
-func (e *ExifExtractorImpl) GetModel() string {
+func (e *ExifExtractorImpl) GetExifInfo() *ExifInfo {
 	if e.exif == nil {
-		return ""
+		return nil
 	}
-	return e.exif.Model
-}
-
-func (e *ExifExtractorImpl) GetMake() string {
-	if e.exif == nil {
-		return ""
+	return &ExifInfo{
+		Make:        e.exif.Make,
+		Model:       e.exif.Model,
+		Software:    e.exif.Software,
+		ImageWidth:  int(e.exif.ImageWidth),
+		ImageHeight: int(e.exif.ImageHeight),
+		Time:        e.exif.DateTimeOriginal(),
+		Orientation: e.exif.Orientation,
+		GPSInfo: GPSInfo{
+			Latitude:  e.exif.GPS.Latitude(),
+			Longitude: e.exif.GPS.Longitude(),
+		},
 	}
-	return e.exif.Make
-}
-
-func (e *ExifExtractorImpl) GetSoftware() string {
-	if e.exif == nil {
-		return ""
-	}
-	return e.exif.Software
-}
-
-func (e *ExifExtractorImpl) GetImageWidth() int {
-	if e.exif == nil {
-		return 0
-	}
-	return int(e.exif.ImageWidth)
-}
-
-func (e *ExifExtractorImpl) GetImageHeight() int {
-	if e.exif == nil {
-		return 0
-	}
-	return int(e.exif.ImageHeight)
-}
-
-func (e *ExifExtractorImpl) GetOrientation() meta.Orientation {
-	if e.exif == nil {
-		return 0
-	}
-	return e.exif.Orientation
-}
-
-func (e *ExifExtractorImpl) GetLatLong() (lat, long float64, err error) {
-	if e.exif == nil {
-		return 0, 0, nil
-	}
-	return e.exif.GPS.Latitude(), e.exif.GPS.Longitude(), nil
-}
-
-func (e *ExifExtractorImpl) GetTime() time.Time {
-	return e.exif.DateTimeOriginal()
 }

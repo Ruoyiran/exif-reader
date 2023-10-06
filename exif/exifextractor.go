@@ -9,20 +9,25 @@ const (
 	isDebug = false
 )
 
+type GPSInfo struct {
+	Latitude  float64
+	Longitude float64
+}
+
+type ExifInfo struct {
+	Make        string
+	Model       string
+	Software    string
+	ImageWidth  int
+	ImageHeight int
+	Time        time.Time
+	Orientation meta.Orientation
+	GPSInfo     GPSInfo
+}
+
 type ExifExtractor interface {
 	Decode() error
-	GetMake() string
-	GetModel() string
-	GetSoftware() string
-	GetImageWidth() int
-	GetImageHeight() int
-
-	// GetOrientation Valid EXIF values are 1 to 8. Values outside this range (for example, 0) are ignored.
-	GetOrientation() meta.Orientation
-
-	GetLatLong() (lat, long float64, err error)
-
-	GetTime() time.Time
+	GetExifInfo() *ExifInfo
 }
 
 func GetExifExtractor(filePath string) ExifExtractor {
