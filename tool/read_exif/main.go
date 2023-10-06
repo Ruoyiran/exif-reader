@@ -13,11 +13,8 @@ func main() {
 		log.Fatal("please give filename as argument")
 	}
 	filePath := os.Args[1]
-	extractor, err := exif.GetExifExtractor(filePath)
-	if err != nil {
-		logrus.Fatalf("%s", err.Error())
-	}
-	err = extractor.Decode()
+	extractor := exif.GetExifExtractor(filePath)
+	err := extractor.Decode()
 	if err != nil {
 		logrus.Fatalf("%s", err.Error())
 	}

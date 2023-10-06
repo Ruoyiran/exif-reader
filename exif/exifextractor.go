@@ -25,6 +25,6 @@ type ExifExtractor interface {
 	GetTime() time.Time
 }
 
-func GetExifExtractor(filePath string) (ExifExtractor, error) {
-	return &ExifExtractorImpl{filePath: filePath}, nil
+func GetExifExtractor(filePath string) ExifExtractor {
+	return &ExifExtractorImpl{filePath: filePath}
 }
